@@ -1,7 +1,6 @@
 """
 Django settings for a project.
 """
-import os
 
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
@@ -21,14 +20,7 @@ SITE_NAME = basename(DJANGO_ROOT)
 path.append(DJANGO_ROOT)
 ########## END PATH CONFIGURATION
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication'
-    )
-}
-
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 # AUTH_USER_MODEL = 'public.User'
@@ -39,18 +31,23 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-import dj_database_url
-
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'project.db',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',                      # Set to empty string for default.
+    }
 }
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-# This should be set to the test domain (e.g. test.django-angular-pt.com)
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost:8001', 'localhost', 'cc-ro-seed-frontend.herokuapp.com', 'cc-ro-seed-backend.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -96,19 +93,30 @@ STATIC_ROOT = 'staticfiles'
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
 
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    normpath(join(SITE_ROOT, 'apps', 'public', 'static')),
+)
+
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #'django.contrib.staticfiles.finders.DefaultStorageFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = 'kyv!o&v7zjf6ewl&5p=91avi^pyh_9lskhe*6)q=s7_lk(swn0'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    #'django.template.loaders.eggs.Loader',
+#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,36 +125,36 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'confs.urls'
+ROOT_URLCONF = 'project.confs.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'confs.wsgi.application'
+WSGI_APPLICATION = 'project.confs.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(DJANGO_ROOT, "templates"),
-    os.path.join(DJANGO_ROOT, "static"),
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+
+    join(SITE_ROOT, 'apps/public/templates'),
 )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admindocs',
+    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    'apps.public',
-    'rest_framework.authtoken',
-    'rest_framework',
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
     'south',
-    'corsheaders',
+    'apps.public',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -180,16 +188,7 @@ LOGGING = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '4444444444444444444'
-
-DEBUG_APPS = ()
-
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8000',
-    'localhost:8001',
-    'localhost/',
-    'cc-ro-seed-frontend.herokuapp.com',
-    'cc-ro-seed-backend.herokuapp.com/',
-    'cc-ro-seed-backend.herokuapp.com'
-)
+try:
+    from dev import *
+except ImportError:
+    pass
