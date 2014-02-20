@@ -111,6 +111,11 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+# Absolute path to the directory that holds the project sources
+# Make sure to use a training slash
+STATIC_APP_NAME = 'static'
+MEDIA_APP_NAME = 'media'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'kyv!o&v7zjf6ewl&5p=91avi^pyh_9lskhe*6)q=s7_lk(swn0'
 
