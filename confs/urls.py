@@ -6,7 +6,7 @@ from django.contrib import admin
 from settings import base
 
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
+from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
