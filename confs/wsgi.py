@@ -20,7 +20,7 @@ import sys
 # if running multiple sites in the same mod_wsgi process. To fix this, use
 # mod_wsgi daemon mode with each site in its own daemon process, or use
 # os.environ["DJANGO_SETTINGS_MODULE"] = "project.settings"
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.test")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.base")
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 sys.path.append(BASE_DIR)

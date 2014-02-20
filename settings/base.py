@@ -113,7 +113,7 @@ LOGGING = {
 }
 
 try:
-    from local_settings import *
+    from test import *
     # INSTALLED_APPS += DEBUG_APPS
 except ImportError:
     pass
