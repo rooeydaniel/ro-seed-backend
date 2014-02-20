@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # Static files, served from server
-    url(r'^static/(\?P.*)$', 'django.views.static.serve', {'document_root': base.STATIC_ROOT}),
+    url(r'^static/(\?P.*)$', 'django.contrib.staticfiles.views.serve', {'document_root': base.STATIC_ROOT}),
 
     url(r'^', include('apps.public.urls')),
 )
