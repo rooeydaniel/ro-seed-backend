@@ -21,6 +21,17 @@ CORS_ALLOW_HEADERS = (
     'AUTHORIZATION'
 )
 
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8000',
+    'localhost:8001',
+    'localhost/',
+    'cc-ro-seed-frontend.herokuapp.com',
+    'cc-ro-seed-backend.herokuapp.com/',
+    'cc-ro-seed-backend.herokuapp.com'
+)
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost:8001', 'localhost']
+
 #EMAIL_HOST = 'smtp.gmail.com'
 #EMAIL_HOST_USER = 'username@googlemail.com'
 #EMAIL_HOST_PASSWORD = 'xxxxxxxx'

@@ -20,6 +20,13 @@ SITE_NAME = basename(DJANGO_ROOT)
 path.append(DJANGO_ROOT)
 ########## END PATH CONFIGURATION
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    )
+}
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -31,23 +38,18 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'project.db',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+    'default': dj_database_url.config()
     }
-}
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['127.0.0.1']
+# This should be set to the test domain (e.g. test.django-angular-pt.com)
+ALLOWED_HOSTS = ['cc-ro-seed-frontend.herokuapp.com', 'cc-ro-seed-backend.herokuapp.com']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -98,7 +100,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    normpath(join(SITE_ROOT, 'apps', 'public', 'static')),
+    normpath(join(SITE_ROOT, 'apps', 'public')),
 )
 
 # List of finder classes that know how to find static files in
@@ -125,36 +127,36 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'project.confs.urls'
+ROOT_URLCONF = 'confs.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'project.confs.wsgi.application'
+WSGI_APPLICATION = 'confs.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    join(DJANGO_ROOT, "templates"),
+    join(DJANGO_ROOT, "static"),
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-
-    join(SITE_ROOT, 'apps/public/templates'),
 )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-    'south',
     'apps.public',
+    'rest_framework.authtoken',
+    'rest_framework',
+    'south',
+    'corsheaders',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -187,6 +189,12 @@ LOGGING = {
 }
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.file'
+
+CORS_ORIGIN_WHITELIST = (
+    'cc-ro-seed-frontend.herokuapp.com',
+    'cc-ro-seed-backend.herokuapp.com/',
+    'cc-ro-seed-backend.herokuapp.com'
+)
 
 try:
     from dev import *
