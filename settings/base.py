@@ -89,7 +89,7 @@ MEDIA_URL = ''
 # Example: "/var/www/example.com/static/"
 # Apache + mod_wsgi, must run django-admin.py collectstatic --noinput --pythonpath=$PWD --settings=project.settings.test
 #   before running application
-STATIC_ROOT = 'static'
+STATIC_ROOT = 'staticfiles'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -101,7 +101,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     # normpath(join('apps', 'public', 'static')),
-    normpath(join('static')),
+    normpath(join(SITE_ROOT, 'static')),
 )
 
 # List of finder classes that know how to find static files in
