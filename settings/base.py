@@ -89,7 +89,7 @@ MEDIA_URL = ''
 # Example: "/var/www/example.com/static/"
 # Apache + mod_wsgi, must run django-admin.py collectstatic --noinput --pythonpath=$PWD --settings=project.settings.test
 #   before running application
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = 'static'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
