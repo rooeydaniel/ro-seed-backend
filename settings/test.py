@@ -3,7 +3,7 @@ import os
 DEBUG = False
 
 # This should be set to the test domain (e.g. test.django-angular-pt.com)
-ALLOWED_HOSTS = ['cc-ro-seed-frontend.herokuapp.com', 'daniel-angular.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost:8001', 'localhost', 'cc-ro-seed-frontend.herokuapp.com']
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -62,5 +62,7 @@ DEBUG_APPS = ()
 
 CORS_ORIGIN_WHITELIST = (
     'localhost:8000',
+    'localhost:8001',
     'localhost/',
+    'cc-ro-seed-frontend.herokuapp.com'
 )
