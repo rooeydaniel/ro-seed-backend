@@ -65,5 +65,6 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:8001',
     'localhost/',
     'cc-ro-seed-frontend.herokuapp.com',
+    'cc-ro-seed-backend.herokuapp.com/',
     'cc-ro-seed-backend.herokuapp.com'
 )
